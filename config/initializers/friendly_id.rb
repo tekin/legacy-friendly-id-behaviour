@@ -19,7 +19,7 @@ FriendlyId.defaults do |config|
     stylesheets assets javascripts images)
 
 
-  config.use :slugged
+  config.use :slugged, FriendlyId::SequentialSlugs
   #  ## Friendly Finders
   #
   # Uncomment this to use friendly finders in all models. By default, if
@@ -58,7 +58,7 @@ FriendlyId.defaults do |config|
   # separator. If you're upgrading from FriendlyId 4, you may wish to replace this
   # with two dashes.
   #
-  config.sequence_separator = '-'
+  config.sequence_separator = '--'
   #
   #  ## Tips and Tricks
   #
