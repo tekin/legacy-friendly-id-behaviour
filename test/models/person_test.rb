@@ -5,4 +5,20 @@ class PersonTest < ActiveSupport::TestCase
     person = Person.create!(name: 'Hayao Miyazaki')
     assert_equal 'hayao-miyazaki', person.slug
   end
+
+  test 'clashing slugs get a sequence number' do
+    people = (1..12).map { Person.create!(name: 'Hayao Miyazaki') }
+
+    assert_equal 'hayao-miyazaki', people[0].slug
+    assert_equal 'hayao-miyazaki--2', people[1].slug
+    # assert_equal 'hayao-miyazaki--3', people[2].slug
+    # assert_equal 'hayao-miyazaki--4', people[3].slug
+    # assert_equal 'hayao-miyazaki--5', people[4].slug
+    # assert_equal 'hayao-miyazaki--6', people[5].slug
+    # assert_equal 'hayao-miyazaki--7', people[6].slug
+    # assert_equal 'hayao-miyazaki--8', people[7].slug
+    # assert_equal 'hayao-miyazaki--9', people[8].slug
+    # assert_equal 'hayao-miyazaki--10', people[9].slug
+    # assert_equal 'hayao-miyazaki--11', people[10].slug
+  end
 end
