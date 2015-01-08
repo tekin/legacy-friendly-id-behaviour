@@ -25,13 +25,21 @@ module FriendlyId
   private
 
     def next_sequence_number
-      slug_conflicts.count + 1
+      if last_sequence_number == 0
+        2
+      else
+        last_sequence_number + 1
+      end
+    end
+
+    def last_sequence_number
+      slug_conflicts.last.split("#{clashing_slug}#{sequence_separator}").last.to_i
     end
 
     def slug_conflicts
       scope.
         where(conflict_query, clashing_slug, sequential_slug_matcher).
-        order(ordering_query)
+        order(ordering_query).pluck(slug_column)
     end
 
     def conflict_query

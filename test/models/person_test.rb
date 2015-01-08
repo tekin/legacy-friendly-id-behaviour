@@ -22,4 +22,20 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal 'hayao-miyazaki--11', people[10].slug
     assert_equal 'hayao-miyazaki--12', people[11].slug
   end
+
+  test 'sequential slug resolution copes with deleted instances' do
+    person_1 = Person.create!(name: 'Hayao Miyazaki')
+    person_2 = Person.create!(name: 'Hayao Miyazaki')
+    person_3 = Person.create!(name: 'Hayao Miyazaki')
+
+    assert_equal 'hayao-miyazaki', person_1.slug
+    assert_equal 'hayao-miyazaki--2', person_2.slug
+    assert_equal 'hayao-miyazaki--3', person_3.slug
+
+    person_2.destroy
+
+    person_4 = Person.create!(name: 'Hayao Miyazaki')
+
+    assert_equal 'hayao-miyazaki--4', person_4.slug
+  end
 end
